@@ -501,8 +501,7 @@
         });
       };
 
-      //Checking for mobile size
-      if (window.innerWidth <= 700) {
+      let menuClickEvent = () => {
         menuItems.forEach((elem) => {
           elem.addEventListener("click", () => {
             //Checking if element was opened
@@ -516,7 +515,8 @@
             }
           });
         });
-      }
+      };
+
       //Mobile menu handling
       hamburgerMenu.addEventListener("click", () => {
         hamburgerMenu.style.display = "none";
@@ -529,10 +529,17 @@
         navbarWrap.style = "display:none !important";
       });
 
+      //Checking for mobile size & adding listener function
+      if (window.innerWidth <= 700) {
+        menuClickEvent();
+      }
+
       window.onresize = () => {
-        //Displaying navbar in desktop on window resizing
         if (window.innerWidth > 700) {
+          //Displaying navbar in desktop on window resizing
           navbarWrap.style = "display:flex !important";
+          //Resetting menu elements, so that it will not visible on desktop if we open it on mobile & resize
+          resetFunction();
         }
         //Hiding navbar in mobile &
         //making sure hamburger is visible and not close icon, on window resize
@@ -540,6 +547,8 @@
           navbarWrap.style = "display:none !important";
           hamburgerMenu.style.display = "block";
           closeMenuIcon.style.display = "none";
+          //Checking for mobile size & adding listener function on resize
+          menuClickEvent();
         }
       };
       //Mobile menu handling
